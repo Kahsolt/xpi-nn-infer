@@ -8,12 +8,25 @@
 
 ```
 pip install xpi-nn-infer
-python -m xpi_nn_infer.tools.install_default_backends
+python -m xpi_nn_infer.tools.install_default_backends -y
+python -m xpi_nn_infer.tools.infer_torchvision -K torch -M resnet50 -I random
+python -m xpi_nn_infer.tools.benchmark_torchvision -K openvino -M resnet50
 ```
 
-### Backends
+### Supported Devices
+
+- BCM2837: RaspberryPi 3B
+- H618: OrangePi Zero 3
+- RK3576: LubanCat3
+- RK3399: FMX1 Pro, MRK3399
+
+### Configurations
 
 ℹ xpi-nn-infer is a bare framework, you need configure backends to make it work.
+
+#### Envvars
+
+- MODEL_PATH: folder path for auto-downloaded or converted model checkpoints, defaults to `/xpi_nn_infer/MODEL_PATH`
 
 #### Model providers
 
@@ -32,12 +45,16 @@ Thanks to all the open-source model providers 🎉
 
 | name | supported | comment |
 | :-: | :-: | :-: |
-| torch    |  |  |
-| tflite   |  |  |
-| paddle   |  |  |
-| onnx     |  |  |
-| openvino |  |  |
-| ncnn     |  |  |
+| torch      |  |  |
+| tensorflow |  |  |
+| tflite     |  |  |
+| paddle     |  |  |
+| paddlelite |  |  |
+| onnx       |  |  |
+| openvino   |  |  |
+| ncnn       |  |  |
+| mnn        |  |  |
+| mace       |  |  |
 
 #### IO backends
 

@@ -6,3 +6,7 @@ __pycache__/
 build/
 dist/
 *.egg-info/
+
+# weights
+xpi_nn_infer/MODEL_PATH/*
+!xpi_nn_infer/MODEL_PATH/README.txt
