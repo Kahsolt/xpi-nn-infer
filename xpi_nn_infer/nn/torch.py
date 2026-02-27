@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from pathlib import Path
+from inspect import signature
 from typing import Callable
 
 import torch
@@ -37,7 +38,11 @@ class TorchModel(Inferer):
 
     assert Path(fp).suffix == '.onnx', 'fp suffix should be .onnx'
     dummy_input = torch.zeros(*input_size)
-    torch.onnx.export(self.model, dummy_input, fp, opset_version=op_ver, export_params=True, dynamo=False)
+    kwargs = {}
+    params = signature(torch.onnx.export).parameters
+    if 'dynamo' in params:
+      kwargs['dynamo'] = False
+    torch.onnx.export(self.model, dummy_input, fp, opset_version=op_ver, export_params=True, **kwargs)
 
   def to_openvino(self, fp:str, input_size:tuple[int]):
     import openvino as ov

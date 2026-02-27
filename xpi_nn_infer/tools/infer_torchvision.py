@@ -29,7 +29,7 @@ def prepare_input(args) -> DataGen:
         try:
           yield imread(fp, resize=resize, mode='RGB', batchify=True)
         except Exception as e:
-          print(f'skip path {fp}, error {e}')
+          print(e)
     else:
       raise ValueError(f'>> --input is neither file nor folder: {args.input}')
 

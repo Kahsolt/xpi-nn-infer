@@ -23,7 +23,6 @@ class OnnxModel(Inferer):
     self.model_path = model_path
     self.input_name0 = self.model.get_inputs()[0].name
     self.output_name0 = self.model.get_outputs()[0].name
-    self.model.get_input_memory_infos
 
   def infer(self, x:ndarray) -> ndarray:
     return self.model.run([self.output_name0], {self.input_name0: x})[0]

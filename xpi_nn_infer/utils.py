@@ -14,7 +14,7 @@ else:
   MODEL_PATH = ROOT_PATH / 'MODEL_PATH'
 # override by envvar
 if 'MODEL_PATH' in os.environ:
-  MODEL_PATH = Path.expanduser(os.environ['MODEL_PATH'])
+  MODEL_PATH = Path.expanduser(Path(os.environ['MODEL_PATH']))
   assert MODEL_PATH.is_dir(), f'MODEL_PATH detected in envvar, but path {MODEL_PATH} not exists'
 
 

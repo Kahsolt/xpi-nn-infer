@@ -39,5 +39,5 @@ def get_torchvision_model(name:str, input_size:list[int], pretrained:bool=False)
   ox_fp = MODEL_PATH / f'{name}-{encode_input_size(input_size)}.xml'
   if not ox_fp.is_file():
     tc_model = get_tc_model(name, pretrained)
-    tc_model.to_(ox_fp, input_size)
+    tc_model.to_openvino(ox_fp, input_size)
   return OpenvinoModel(ox_fp)
