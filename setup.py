@@ -13,7 +13,7 @@ from setuptools import setup, Command
 # Package meta-data.
 NAME = 'xpi-nn-infer'
 DESCRIPTION = 'A lightweight toolbox for NN model convert and infer on ARM SoC devices like RaspberryPi, OrangePi, LubanCat, etc.'
-URL = 'https://github.com/Kahsolt/xpi-nn-infer'
+URL = 'https://gitee.com/kahsolt/xpi-nn-infer'
 EMAIL = 'kahsolt@qq.com'
 AUTHOR = 'Kahsolt'
 REQUIRES_PYTHON = '>=3.10.0'
