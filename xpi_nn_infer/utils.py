@@ -40,3 +40,9 @@ class ValueWindow:
 def encode_input_size(input_size:tuple[int]) -> str:
   '''encode size tuple to safe filename'''
   return '[' + ','.join([str(e) for e in input_size]) + ']'
+
+
+def exit_missing_packages(packages: list[str]):
+  cmd = f"pip install -U {' '.join(packages)}"
+  print(f'>> Missing required packages! Please maunally run "{cmd}"')
+  exit(-1)
