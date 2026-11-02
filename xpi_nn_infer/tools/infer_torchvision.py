@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from pathlib import Path
-from time import time
+from time import perf_counter
 from argparse import ArgumentParser
 from typing import Generator
 
@@ -37,7 +37,6 @@ def prepare_input(args) -> DataGen:
 def run_torch(args, x:DataGen):
   import torch
   from xpi_nn_infer.nn.torch import get_torchvision_model
-  torch.set_num_threads(torch.get_num_interop_threads())
   tc_model = get_torchvision_model(args.model, pretrained=True)
   for x in xgen:
     pred = tc_model.infer_softmax(torch.from_numpy(x))
@@ -70,8 +69,8 @@ if __name__ == '__main__':
 
   runner = globals().get(f'run_{args.backend}')
 
-  ts_start = time()
+  ts_start = perf_counter()
   xgen = prepare_input(args)
   runner(args, xgen)
-  ts_end = time()
+  ts_end = perf_counter()
   print(f'>> Timecost: {ts_end - ts_start:.3f}s')

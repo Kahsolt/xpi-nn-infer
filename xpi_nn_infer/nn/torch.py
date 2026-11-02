@@ -16,7 +16,11 @@ Callback = Callable[[Tensor, Tensor, int], None]
 class TorchModel(Inferer):
 
   def __init__(self, model:nn.Module):
-    self.model = model.eval()
+    self.model:nn.Module = model.eval()
+
+  def to(self, dtype:torch.dtype, device:str=None):
+    self.model = self.model.to(dtype=dtype, device=device)
+    return self
 
   @torch.inference_mode()
   def infer(self, x:Tensor) -> Tensor:

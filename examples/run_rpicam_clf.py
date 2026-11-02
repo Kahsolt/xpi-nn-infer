@@ -2,7 +2,7 @@
 
 # 树莓派3B实时图像分类: 摄像头 -> 分类模型
 
-from time import time
+from time import perf_counter
 from importlib import import_module
 from argparse import ArgumentParser
 
@@ -23,12 +23,12 @@ def run(args):
     cam.start()
     vw = ValueWindow()
     while True:
-      ts_start = time()
+      ts_start = perf_counter()
       x = cam.capture_array()         # [W, H, C=3]
       x = np.transpose(x, (2, 0, 1))  # [C=3, W, H]
       x = np.expand_dims(x, 0)        # [B, C=3, W, H]
       pred = model.infer(x)
-      ts_end = time()
+      ts_end = perf_counter()
       vw.append(ts_end - ts_start)
 
       print(f'>> pred: {pred}, fps: {1 / (vw.mean):.2f}')

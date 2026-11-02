@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings(category=UserWarning, action='ignore')
 warnings.filterwarnings(category=FutureWarning, action='ignore')
 
-from time import time
+from time import perf_counter
 from xpi_nn_infer.models.transformers import Whisper, KokoroTTS
 
 
@@ -38,9 +38,9 @@ texts = [
 ]
 
 for text in texts:
-  ts_start = time()
+  ts_start = perf_counter()
   wav = tts.infer(text)
   trans = asr.infer(wav, tts.sample_rate)
-  ts_end = time()
+  ts_end = perf_counter()
 
   print('trans:', trans, f'({ts_end - ts_start:.3f}s)')
