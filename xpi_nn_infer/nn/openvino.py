@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# https://github.com/openvinotoolkit/openvino
+# pip install openvino
+
 from typing import Callable
 
 import numpy as np

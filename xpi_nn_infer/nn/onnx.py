@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# https://github.com/onnx/onnx
+# https://github.com/microsoft/onnxruntime
+
+# pip install onnx onnxruntime
+
 from pathlib import Path
 from typing import Callable
 
