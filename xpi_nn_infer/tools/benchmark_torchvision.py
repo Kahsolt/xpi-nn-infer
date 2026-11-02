@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
+from time import sleep
 from argparse import ArgumentParser
 
-from time import sleep
 import numpy as np
 
-from xpi_nn_infer.torch_utils import DEVICES, DTYPES, torch_backends_info
+from xpi_nn_infer.torch_utils import DEVICES, DTYPES, torch_backends_setup, torch_backends_info
 
 MODELS = [
   'mobilenet_v3_small',
@@ -63,6 +63,7 @@ if __name__ == '__main__':
   parser.add_argument('-X', '--run_all', action='store_true')
   args = parser.parse_args()
 
+  torch_backends_setup()
   torch_backends_info()
   print(args)
 
@@ -72,15 +73,22 @@ if __name__ == '__main__':
     for model in MODELS:
       print(f'>> run model: {model}')
       args.model = model
-      fps = runner(args)
+      try:
+        fps = runner(args)
+      except:
+        continue
       results.append((model, fps))
+      if args.backend == 'torch':
+        import torch
+        torch.cuda.empty_cache()
+        torch.cuda.ipc_collect()
+        torch.cuda.synchronize()
       sleep(10)
     print()
     print('=' * 72)
-    print(f'| Model | FPS |')
-    print(f'| :-: | :-: |')
-    for model, fps in results:
-      print(f'| {model} | {fps:.2f} |')
+    print('| ' + ' | '.join([model for model, _ in results]) + ' |')
+    print('|' + f' :-: |' * len(results))
+    print('| ' + ' | '.join([f'{fps:.2f}' for _, fps in results]) + ' |')
   else:
     try:
       runner(args)
